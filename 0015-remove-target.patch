@@ -1,0 +1,74 @@
+From 4f9853fc4f84621d61099f8a3f67def2cac05296 Mon Sep 17 00:00:00 2001
+From: Bandana <aurelende@protonmail.com>
+Date: Mon, 6 Apr 2020 17:22:54 -0400
+Subject: [PATCH] esc to remove target interface
+
+---
+ Intersect.Client/Core/Input.cs      | 11 +++++++++--
+ Intersect.Client/Entities/Player.cs |  7 ++++---
+ 2 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/Intersect.Client/Core/Input.cs b/Intersect.Client/Core/Input.cs
+index ab9d27c4..37846b88 100644
+--- a/Intersect.Client/Core/Input.cs
++++ b/Intersect.Client/Core/Input.cs
+@@ -56,7 +56,14 @@ public static void OnKeyPressed(Keys key)
+                     return;
+                 }
+ 
+-                Interface.Interface.GameUi?.EscapeMenu?.ToggleHidden();
++                if (Globals.Me?.TargetBox != null)
++                {
++                    Globals.Me?.TryTarget(true);
++                }
++                else
++                {
++                    Interface.Interface.GameUi?.EscapeMenu?.ToggleHidden();
++                }
+             }
+ 
+             if (Interface.Interface.HasInputFocus())
+@@ -286,7 +293,7 @@ public static void OnMouseDown(GameInput.MouseButtons btn)
+                 return;
+             }
+ 
+-            if (Globals.Me.TryTarget())
++            if (Globals.Me.TryTarget(false))
+             {
+                 return;
+             }
+diff --git a/Intersect.Client/Entities/Player.cs b/Intersect.Client/Entities/Player.cs
+index e7af06e0..d26dd3e1 100644
+--- a/Intersect.Client/Entities/Player.cs
++++ b/Intersect.Client/Entities/Player.cs
+@@ -1096,7 +1096,7 @@ public bool GetRealLocation(ref int x, ref int y, ref Guid mapId)
+             return false;
+         }
+ 
+-        public bool TryTarget()
++        public bool TryTarget(bool removeTarget)
+         {
+             //Check for taunt status if so don't allow to change target
+             for (var i = 0; i < Status.Count; i++)
+@@ -1137,7 +1137,8 @@ public bool TryTarget()
+                                 if (en.Value.CurrentMap == mapId &&
+                                     en.Value.X == x &&
+                                     en.Value.Y == y &&
+-                                    (!en.Value.IsStealthed() || Globals.Me.IsInMyParty(en.Value)))
++                                    (!en.Value.IsStealthed() || Globals.Me.IsInMyParty(en.Value)) ||
++                                    removeTarget)
+                                 {
+                                     if (en.Value.GetType() != typeof(Projectile) &&
+                                         en.Value.GetType() != typeof(Resource))
+@@ -1165,7 +1166,7 @@ public bool TryTarget()
+                                             }
+                                         }
+ 
+-                                        if (TargetType == 0 && TargetIndex == en.Value.Id)
++                                        if (TargetType == 0 && TargetIndex == en.Value.Id || removeTarget)
+                                         {
+                                             ClearTarget();
+ 
+-- 
+2.26.0.windows.1
+

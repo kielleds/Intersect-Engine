@@ -1,0 +1,44 @@
+From 20d44fb0b69badc731e25a41077e1feee423ac9c Mon Sep 17 00:00:00 2001
+From: JadinRiverJames <40528979+JadinRiverJames@users.noreply.github.com>
+Date: Mon, 13 Apr 2020 17:48:05 -0600
+Subject: [PATCH] Update Player.cs
+
+---
+ Intersect.Server/Entities/Player.cs | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/Intersect.Server/Entities/Player.cs b/Intersect.Server/Entities/Player.cs
+index 81a0d2d7..eb82aa70 100644
+--- a/Intersect.Server/Entities/Player.cs
++++ b/Intersect.Server/Entities/Player.cs
+@@ -1392,7 +1392,8 @@ public bool TryGiveItem(Item item, bool sendUpdate = true)
+         {
+             return TryGiveItem(item, false, sendUpdate);
+         }
+-
++        // 19 11 25 //
++        // Nightmare xD My god the irony
+         public bool TryGiveItem(Item item, bool bankOverflow, bool sendUpdate)
+         {
+             var itemBase = ItemBase.Get(item.ItemId);
+@@ -1417,7 +1418,7 @@ public bool TryGiveItem(Item item, bool bankOverflow, bool sendUpdate)
+                         }
+ 
+                         UpdateGatherItemQuests(item.ItemId);
+-
++                        PacketSender.SendActionMsg(this, itemBase.Name, CustomColors.Combat.TrueDamage);
+                         return true;
+                     }
+                 }
+@@ -1437,7 +1438,7 @@ public bool TryGiveItem(Item item, bool bankOverflow, bool sendUpdate)
+                     }
+ 
+                     UpdateGatherItemQuests(item.ItemId);
+-
++                    PacketSender.SendActionMsg(this, itemBase.Name, CustomColors.Combat.TrueDamage);
+                     return true;
+                 }
+             }
+-- 
+2.26.0.windows.1
+

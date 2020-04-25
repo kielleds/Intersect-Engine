@@ -1,0 +1,26 @@
+From 99a95a7afc7da5ba26608bc803bf3d935232abcc Mon Sep 17 00:00:00 2001
+From: Bandana <aurelende@protonmail.com>
+Date: Tue, 14 Apr 2020 10:35:29 -0400
+Subject: [PATCH 12/14] diag knockback fix
+
+---
+ Intersect.Server/Entities/Entity.cs | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Intersect.Server/Entities/Entity.cs b/Intersect.Server/Entities/Entity.cs
+index 7837fdf3..525a4200 100644
+--- a/Intersect.Server/Entities/Entity.cs
++++ b/Intersect.Server/Entities/Entity.cs
+@@ -1429,7 +1429,8 @@ byte projectileDir
+             }
+ 
+             //If there is a knockback, knock them backwards and make sure its linear (diagonal player movement not coded).
+-            if (projectile.Knockback > 0 && projectileDir < 4)
++            //Diagonal movement coded with diagonal patch
++            if (projectile.Knockback > 0 && projectileDir < 8)
+             {
+                 var dash = new Dash(target, projectile.Knockback, projectileDir, false, false, false, false);
+             }
+-- 
+2.25.0.windows.1
+

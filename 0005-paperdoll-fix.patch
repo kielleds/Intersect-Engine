@@ -1,0 +1,40 @@
+From bcdfd4a41a1bb41df2cf32276db00a7fd3be7600 Mon Sep 17 00:00:00 2001
+From: Bandana <aurelende@protonmail.com>
+Date: Fri, 3 Apr 2020 13:24:47 -0400
+Subject: [PATCH 05/14] paperdoll fix
+
+Signed-off-by: Bandana <aurelende@protonmail.com>
+---
+ Intersect.Client/Entities/Entity.cs | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/Intersect.Client/Entities/Entity.cs b/Intersect.Client/Entities/Entity.cs
+index 49613152..0bbf0f21 100644
+--- a/Intersect.Client/Entities/Entity.cs
++++ b/Intersect.Client/Entities/Entity.cs
+@@ -1138,6 +1138,22 @@ public virtual void DrawEquipment(string filename, int alpha)
+                     case 3:
+                         d = 2;
+ 
++                        break;
++                    case 4:
++                        d = 1;
++
++                        break;
++                    case 5:
++                        d = 2;
++
++                        break;
++                    case 6:
++                        d = 1;
++
++                        break;
++                    case 7:
++                        d = 2;
++
+                         break;
+                 }
+ 
+-- 
+2.25.0.windows.1
+
